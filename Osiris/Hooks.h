@@ -54,6 +54,8 @@ public:
     HookType sound;
     HookType surface;
     HookType viewRender;
+    VmtSwap networkChannel;
+
     HookType svCheats;
 private:
 #ifdef _WIN32
