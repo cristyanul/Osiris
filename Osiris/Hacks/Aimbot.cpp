@@ -227,6 +227,18 @@ void Aimbot::run(UserCmd* cmd) noexcept
             if (clamped)
                 cmd->buttons &= ~UserCmd::IN_ATTACK;
 
+            if (config->aimbot[weaponIndex].forceAccuracy && config->aimbot[weaponIndex].autoShot && activeWeapon->getInaccuracy() > config->aimbot[weaponIndex].maxShotInaccuracy) {
+
+                const auto velocity = localPlayer->velocity();
+
+                Vector direction = velocity.toAngle();
+                direction.y = cmd->viewangles.y - direction.y;
+
+                const auto negativeDirection = Vector::fromAngle(direction) * -1;
+                cmd->forwardmove = negativeDirection.x;
+                cmd->sidemove = negativeDirection.y;
+            }
+
             if (clamped || config->aimbot[weaponIndex].smooth > 1.0f) lastAngles = cmd->viewangles;
             else lastAngles = Vector{ };
 
