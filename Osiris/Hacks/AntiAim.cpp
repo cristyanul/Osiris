@@ -18,10 +18,11 @@ struct AntiAimConfig {
 
 void AntiAim::run(UserCmd* cmd, const Vector& previousViewAngles, const Vector& currentViewAngles, bool& sendPacket) noexcept
 {
+  
     if (antiAimConfig.enabled) {
         if (!localPlayer)
             return;
-
+        if (cmd->buttons &= ~(UserCmd::IN_FORWARD | UserCmd::IN_BACK | UserCmd::IN_MOVERIGHT | UserCmd::IN_MOVELEFT))
         if (antiAimConfig.pitch && cmd->viewangles.x == currentViewAngles.x)
             cmd->viewangles.x = antiAimConfig.pitchAngle;
 
