@@ -495,6 +495,7 @@ static void from_json(const json& j, Config::Misc& m)
     read(j, "Opposite Hand Knife", m.oppositeHandKnife);
     read<value_t::object>(j, "Preserve Killfeed", m.preserveKillfeed);
     read(j, "sv pure bypass", m.svpurebypass);
+    read(j, "Auto disconnect", m.autoDisconnect);
 }
 
 static void from_json(const json& j, Config::Misc::Reportbot& r)
@@ -873,6 +874,7 @@ static void to_json(json& j, const Config::Misc& o)
     WRITE("Opposite Hand Knife", oppositeHandKnife);
     WRITE("Preserve Killfeed", preserveKillfeed);
     WRITE("sv pure bypass", svpurebypass);
+    WRITE("Auto disconnect", autoDisconnect);
 }
 
 static void to_json(json& j, const Config::Visuals::ColorCorrection& o, const Config::Visuals::ColorCorrection& dummy)

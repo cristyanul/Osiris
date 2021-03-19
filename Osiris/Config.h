@@ -217,6 +217,7 @@ public:
         bool oppositeHandKnife = false;
         PreserveKillfeed preserveKillfeed;
         bool svpurebypass{ true };
+        bool autoDisconnect{ false };
         char clanTag[16];
         KeyBind edgejumpkey = KeyBind::NONE;
         KeyBind slowwalkKey = KeyBind::NONE;

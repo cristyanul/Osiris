@@ -1359,6 +1359,8 @@ void GUI::renderMiscWindow(bool contentOnly) noexcept
     ImGui::Checkbox("Fake prime", &config->misc.fakePrime);
     ImGui::Checkbox("Opposite Hand Knife", &config->misc.oppositeHandKnife);
     ImGui::Checkbox("Preserve Killfeed", &config->misc.preserveKillfeed.enabled);
+    ImGui::Checkbox("Auto disconnect", &config->misc.autoDisconnect);
+    ImGui::Checkbox("Sv_pure bypass", &config->misc.svpurebypass);
     ImGui::SameLine();
 
     ImGui::PushID("Preserve Killfeed");
