@@ -86,6 +86,7 @@ static void to_json(json& j, const AntiAimConfig& o, const AntiAimConfig& dummy 
     WRITE("Pitch", pitch);
     WRITE("Pitch angle", pitchAngle);
     WRITE("Yaw", yaw);
+    WRITE("yaw_angle", yawAngle);
 }
 
 json AntiAim::toJson() noexcept
@@ -101,6 +102,7 @@ static void from_json(const json& j, AntiAimConfig& a)
     read(j, "Pitch", a.pitch);
     read(j, "Yaw", a.yaw);
     read(j, "Pitch angle", a.pitchAngle);
+    read(j, "yaw_angle", a.yawAngle);
 }
 
 void AntiAim::fromJson(const json& j) noexcept

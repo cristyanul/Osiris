@@ -186,9 +186,6 @@ public:
         bool antiAfkKick{ false };
         bool autoStrafe{ false };
         bool bunnyHop{ false };
-        int  h_hc{ 0 };
-        int  h_l{ 0 };
-        int  h_m{ 0 };
         bool customClanTag{ false };
         bool clocktag{ false };
         bool animatedClanTag{ false };
