@@ -61,6 +61,40 @@ Free open-source cross-platform cheat software for **Counter-Strike: Global Offe
     *   **Time limit** - limit the backtracking window \[*1*-*200*ms\]
 
 *   **Glow** - render glow effect on entities
+* **Aimbot** - aim assistance
+    * **Enabled** - on / off master switch
+    * **On key [ key ]** - aimbot works only when chosen key is being held
+    * **Aimlock** - brings your aim to the target (affected by Smooth).
+    * **Silent** - aimbot is not visible on your screen (client-sided only)
+    * **Friendly fire** - treat allies as enemies
+    * **Visible only** - aim only on visible players
+    * **Scoped only** - aimbot works only when using scope (applies only to sniper rifles)
+    * **Ignore flash** - ignore flashbang i.e. aim when local player is flashed
+    * **Ignore smoke** - ignore smoke i.e. aim when target is in smoke
+    * **Auto shot** - shoot automatically when target found
+    * **Auto scope** - automatically scopes sniper rifle before shooting
+    * **Bone** - bone which aimbot aims at
+    * **Fov** - field-of-view which aimbot operates [*0*-*255*]
+    * **Smooth** - smooth aimbot movement in order to seem more human-like
+    * **Max aim inaccuracy** - maximum weapon inaccuracy allowing aimbot to run, lowering this value will e.g. disable aimbot while jumping or running
+
+* **Triggerbot** - automatically fires when crosshair is on enemy
+    * **Enabled** - on / off master switch
+    * **On key [ key ]** - triggerbot works only when chosen key is being held
+    * **Friendly fire** - treat allies as enemies
+    * **Scoped only** - triggerbot works only when using scope (applies only to sniper rifles)
+    * **Ignore flash** - ignore flashbang i.e. shoot when local player is flashed
+    * **Ignore smoke** - ignore smoke i.e. shoot when target is in smoke
+    * **Hitgroup** - body parts on which triggerbot works
+    * **Shot delay** - delay time in ms (milliseconds)
+    * **Min damage** - minimal damage to fire.
+
+* **Backtrack** - abuse lag compensation in order to move players back in time
+    * **Enabled** - on / off master switch
+    * **Ignore smoke** - ignore smoke i.e. backtrack when target is in smoke
+    * **Time limit** - limit the backtracking window [*1*-*200*ms]
+
+* **Glow** - render glow effect on entities
 
     *Allies, Enemies, Planting (player planting bomb), Defusing (player defusing bomb), Local player, Weapons (dropped weapons), C4, Planted C4, Chickens, Defuse kits, Projectiles, Hostages, Ragdolls* **/** *All, Visible, Occluded*
 
@@ -140,6 +174,72 @@ Free open-source cross-platform cheat software for **Counter-Strike: Global Offe
 
 *   **Sound** - modify volume of certain sound effects
     *   **Chicken volume** - volume of chicken sounds
+    * **Enabled** - on / off master switch
+    * **Health based** - color is based on player's hp
+    * **Rainbow** - change color frequently
+    * **Blinking** - change transparency frequently
+    * **Material** - material applied to model (*Normal, Flat, Animated, Platinum,Glass, Chrome, Crystal, Silver, Gold, Plastic, Glow*)
+    * **Wireframe** - render triangle mesh instead of solid material
+    * **Alpha** - maximum material transparency
+
+* **Esp** - show additional information about players and game world
+
+    1. *Allies, Enemies*
+        * *All, Visible, Occluded*
+    1. *Weapons*
+    1. *Projectiles*
+        * *Flashbang, HE Grenade, Breach Charge, Bump Mine, Decoy Grenade, Molotov, TA Grenade, Smoke Grenade, Snowball*
+    1. *Danger Zone*
+        * *Sentries, Drones, Cash, Cash Dufflebag, Pistol Case, Light Case, Heavy Case, Explosive Case, Tools Case, Full Armor, Armor, Helmet, Parachute, Briefcase, Tablet Upgrade, ExoJump, Ammobox, Radar Jammer*
+    <br><br>
+    * **Enabled** - on / off master switch
+    * **Font** - esp text font number (from `vgui_spew_fonts` command)
+    * **Snaplines** - draw snapline to player
+    * **Eye traces** - draw player eye traces (shows where player looks)
+    * **Box** - draw 2D box over player model
+    * **Name** - draw player name
+    * **Health** - draw player health
+    * **Health bar** - draw rectangle indicating player health
+    * **Armor** - draw player armor
+    * **Armor bar** - draw rectangle indicating player armor
+    * **Money** - draw player money
+    * **Head dot** - draw dot on player's head
+    * **Active Weapon** - draw player equipped weapon
+
+* **Visuals** - miscellaneous visual options
+    * **Disable post-processing** - disable post-processing effects in order to increase FPS
+    * **Inverse ragdoll gravity** - inverse gravitational acceleration on falling player ragdoll corpse (during death sequence)
+    * **No fog** - remove fog from map for better visibility
+    * **No 3d sky** - remove 3d skybox from map - increases FPS
+    * **No visual recoil** - remove visual recoil punch effect
+    * **No hands** - remove arms / hands model from first-person view
+    * **No sleeves** - remove sleeves model from first-person view
+    * **No weapons** - remove weapons model from first-person view
+    * **No smoke** - remove smoke grenade effect
+    * **No blur** - remove blur
+    * **No scope overlay** - remove black overlay while scoping
+    * **No grass** - remove grass from map in Danger Zone mode (`dz_blacksite` and `dz_sirocco` maps)
+    * **No shadows** - disable dynamic shadows
+    * **Wireframe smoke** - render smoke skeleton instead of particle effect
+    * **Zoom [ key ]** - enable zoom on unzoomable weapons
+    * **Thirdperson** - thirdperson view
+    * **Thirdperson distance** - camera distance in thirdperson view
+    * **View model FOV** - change view model FOV [*-60*-*0*-*60*] (0 - actual view model, negative values - decreased view model, positive values - increased view model)
+    * **FOV** - change view FOV [*-60*-*0*-*60*] (0 - actual view fov, negative values - decreased, positive values - increased)
+    * **Far Z** - far clipping range, useful after disabling fog on large maps (e.g `dz_sirocco`) to render distant buildings
+    * **Flash reduction** - reduces flashbang grenade effect [*0*-*100*%] (0 - full flash, 100 - no flash)
+    * **Brightness** - control game brightness [*0.0*-*1.0*]
+    * **Skybox** - change sky(box)
+    * **World color** - set world material ambient light color
+    * **Deagle spinner** - play "spinning" inspect animation when holding Deagle
+    * **Screen effect** - screenspace effect - *Drone cam, Drone cam with noise, Underwater, Healthboost, Dangerzone*
+    * **Hit effect** - show screen effect on enemy hit
+    * **Hit maker** - show a cross detail on enemy hit
+
+* **Skin changer** - change weapon skins, knives and stickers
+
+* **Sound** - modify volume of certain sound effects
+    * **Chicken volume** - volume of chicken sounds
 
     *Local player, Allies, Enemies*
     *   **Master volume** - overall volume of sounds emitted by player
@@ -306,9 +406,8 @@ Hooking implementation files are located in [Hooks](https://github.com/danielkru
 
 ## License
 
-> Copyright (c) 2018-2021 Daniel Krupiński
-
-This project is licensed under the [MIT License](https://opensource.org/licenses/mit-license.php) - see the [LICENSE](https://github.com/danielkrupinski/Osiris/blob/master/LICENSE) file for details.
+> Copyright (c) 2018-2020 Daniel Krupiński
+This project is licensed under the [MIT License](https://opensource.org/licenses/mit-license.php) - see the [LICENSE](LICENSE) file for details.
 
 ## See also
 *   [Anubis](https://github.com/danielkrupinski/Anubis) - free and open source cheat for CS:GO with configuration compatible with Osiris
