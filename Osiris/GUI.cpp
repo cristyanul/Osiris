@@ -302,24 +302,7 @@ void GUI::renderAimbotWindow(bool contentOnly) noexcept
         ImGui::End();
 }
 
-void GUI::renderAntiAimWindow(bool contentOnly) noexcept
-{
-    if (!contentOnly) {
-        if (!window.antiAim)
-            return;
-        ImGui::SetNextWindowSize({ 0.0f, 0.0f });
-        ImGui::Begin("Anti aim", &window.antiAim, windowFlags);
-    }
-    ImGui::Checkbox("Enabled", &config->antiAim.enabled);
-    ImGui::Checkbox("##pitch", &config->antiAim.pitch);
-    ImGui::SameLine();
-    ImGui::SliderFloat("Pitch", &config->antiAim.pitchAngle, -89.0f, 89.0f, "%.2f");
-    ImGui::Checkbox("##yaw", &config->antiAim.yaw);
-    ImGui::SameLine();
-    ImGui::SliderFloat("Yaw", &config->antiAim.yawAngle, -180.0f, 180.0f, "%.2f");
-    if (!contentOnly)
-        ImGui::End();
-}
+
 
 void GUI::renderTriggerbotWindow(bool contentOnly) noexcept
 {

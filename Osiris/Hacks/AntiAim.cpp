@@ -13,6 +13,7 @@ struct AntiAimConfig {
     bool pitch = false;
     bool yaw = false;
     float pitchAngle = 0.0f;
+    float yawAngle = 0.0f;
 } antiAimConfig;
 
 void AntiAim::run(UserCmd* cmd, const Vector& previousViewAngles, const Vector& currentViewAngles, bool& sendPacket) noexcept
@@ -24,8 +25,8 @@ void AntiAim::run(UserCmd* cmd, const Vector& previousViewAngles, const Vector& 
         if (antiAimConfig.pitch && cmd->viewangles.x == currentViewAngles.x)
             cmd->viewangles.x = antiAimConfig.pitchAngle;
 
-        if (config->antiAim.yaw && cmd->viewangles.y == currentViewAngles.y) {
-            cmd->viewangles.y = config->antiAim.yawAngle;
+        if (antiAimConfig.yaw && cmd->viewangles.y == currentViewAngles.y) {
+            cmd->viewangles.y = antiAimConfig.yawAngle;
           
         }
     }
@@ -63,6 +64,7 @@ void AntiAim::drawGUI(bool contentOnly) noexcept
     ImGui::SameLine();
     ImGui::SliderFloat("Pitch", &antiAimConfig.pitchAngle, -89.0f, 89.0f, "%.2f");
     ImGui::Checkbox("Yaw", &antiAimConfig.yaw);
+    ImGui::SliderFloat("yaw_angle", &antiAimConfig.yawAngle, -180.0f, 180.0f, "%.2f");
     if (!contentOnly)
         ImGui::End();
 }
