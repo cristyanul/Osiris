@@ -5,7 +5,10 @@
 #include "../SDK/EntityList.h"
 #include "../SDK/NetworkChannel.h"
 #include "../SDK/UserCmd.h"
-
+#include "../Memory.h"
+#include "../SDK/GlobalVars.h"
+#include "../SDK/Surface.h"
+#include "../SDK/GameEvent.h"
 #if OSIRIS_ANTIAIM()
 
 struct AntiAimConfig {
@@ -18,7 +21,8 @@ struct AntiAimConfig {
 
 void AntiAim::run(UserCmd* cmd, const Vector& previousViewAngles, const Vector& currentViewAngles, bool& sendPacket) noexcept
 {
-  
+    float a = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+    bool tf = (rand() % 2) != 0;
     if (antiAimConfig.enabled) {
         if (!localPlayer)
             return;
@@ -33,13 +37,19 @@ void AntiAim::run(UserCmd* cmd, const Vector& previousViewAngles, const Vector& 
         if (localPlayer->throwing(cmd))
             return;
         if (cmd->buttons &= ~(UserCmd::IN_FORWARD | UserCmd::IN_BACK | UserCmd::IN_MOVERIGHT | UserCmd::IN_MOVELEFT))
-        if (antiAimConfig.pitch && cmd->viewangles.x == currentViewAngles.x)
-            cmd->viewangles.x = antiAimConfig.pitchAngle;
 
-        if (antiAimConfig.yaw && cmd->viewangles.y == currentViewAngles.y) {
-            cmd->viewangles.y = antiAimConfig.yawAngle;
-          
-        }
+        if (antiAimConfig.pitch && cmd->viewangles.x == currentViewAngles.x)
+            cmd->viewangles.x = (antiAimConfig.pitchAngle * a);
+        
+
+        if (tf)
+            // real
+            cmd->viewangles.y += (antiAimConfig.yawAngle * a);
+        else
+            // fake
+            cmd->viewangles.y -= (antiAimConfig.yawAngle * a);
+   
+   
     }
 }
 
