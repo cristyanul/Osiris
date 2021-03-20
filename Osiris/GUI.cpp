@@ -99,7 +99,6 @@ void GUI::updateColors() const noexcept
 }
 
 #include "InputUtil.h"
-#include "imguiCustom.cpp"
 
 static void hotkey2(const char* label, KeyBind& key, float samelineOffset = 0.0f, const ImVec2& size = { 100.0f, 0.0f }) noexcept
 {
@@ -1385,7 +1384,7 @@ void GUI::renderMiscWindow(bool contentOnly) noexcept
         {
             ImGui::Combo("Doubletap Speed", &config->ragebotExtra.doubletapSpeed, "Instant\0Fast\0Accurate\0");
             ImGui::SameLine();
-            ImGui::hotkey(config->ragebotExtra.doubleTapKey);
+            hotkey(config->ragebotExtra.doubleTapKey);
             ImGui::Combo("Doubletap Key Mode", &config->ragebotExtra.doubleTapKeyMode, "Hold\0Toggle\0");
         }
     }

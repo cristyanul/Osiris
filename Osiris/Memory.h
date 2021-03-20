@@ -19,11 +19,11 @@ class PlayerResource;
 class ViewRender;
 class ViewRenderBeams;
 class WeaponSystem;
-class ClientState;
 template <typename Key, typename Value>
 struct UtlMap;
 template <typename T>
 class UtlVector;
+class ClientState;
 
 struct ActiveChannels;
 struct Channel;
@@ -49,9 +49,9 @@ public:
     Input* input;
     GlobalVars* globalVars;
     GlowObjectManager* glowObjectManager;
-    ClientState* clientState;
     UtlVector<PlantedC4*>* plantedC4s;
     UtlMap<short, PanoramaEventRegistration>* registeredPanoramaEvents;
+    ClientState* clientState;
 
     bool* disablePostProcessing;
 
@@ -62,7 +62,7 @@ public:
     int(__THISCALL* getSequenceActivity)(void*, int);
     bool(__THISCALL* isOtherEnemy)(Entity*, Entity*);
     uintptr_t hud;
-    int* (__THISCALL* findHudElement)(uintptr_t, const char*);
+    int*(__THISCALL* findHudElement)(uintptr_t, const char*);
     int(__THISCALL* clearHudWeapon)(int*, int);
     std::add_pointer_t<ItemSystem* __CDECL()> itemSystem;
     void(__THISCALL* setAbsOrigin)(Entity*, const Vector&);
@@ -81,7 +81,7 @@ public:
     MoveData* moveData;
     MoveHelper* moveHelper;
     std::uintptr_t keyValuesFromString;
-    KeyValues* (__THISCALL* keyValuesFindKey)(KeyValues* keyValues, const char* keyName, bool create);
+    KeyValues*(__THISCALL* keyValuesFindKey)(KeyValues* keyValues, const char* keyName, bool create);
     void(__THISCALL* keyValuesSetString)(KeyValues* keyValues, const char* value);
     WeaponSystem* weaponSystem;
     std::add_pointer_t<const char** __FASTCALL(const char* playerModelName)> getPlayerViewmodelArmConfigForPlayerModel;
@@ -89,9 +89,7 @@ public:
     ActiveChannels* activeChannels;
     Channel* channels;
     PlayerResource** playerResource;
-    const wchar_t* (__THISCALL* getDecoratedPlayerName)(PlayerResource* pr, int index, wchar_t* buffer, int buffsize, int flags);
-    void* WriteUsercmdDeltaToBufferReturn;
-    uintptr_t WriteUsercmd;
+    const wchar_t*(__THISCALL* getDecoratedPlayerName)(PlayerResource* pr, int index, wchar_t* buffer, int buffsize, int flags);
     uintptr_t scopeDust;
     uintptr_t scopeArc;
     uintptr_t demoOrHLTV;
@@ -107,6 +105,11 @@ public:
     }
 
     bool submitReport(const char* xuid, const char* report) const noexcept
+    const wchar_t*(__thiscall* getDecoratedPlayerName)(PlayerResource* pr, int index, wchar_t* buffer, int buffsize, int flags);
+    void* WriteUsercmdDeltaToBufferReturn;
+    uintptr_t WriteUsercmd;
+private:
+    static std::uintptr_t findPattern(const wchar_t* module, const char* pattern) noexcept
     {
 #ifdef _WIN32
         return reinterpret_cast<bool(__stdcall*)(const char*, const char*)>(submitReportFunction)(xuid, report);
