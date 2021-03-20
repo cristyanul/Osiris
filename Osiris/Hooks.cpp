@@ -62,7 +62,9 @@
 #include "SDK/Surface.h"
 #include "SDK/UserCmd.h"
 #include "SDK/NetworkChannel.h"
-
+#include "Hacks/Tickbase.h"
+#include "Memory.h"
+#include "SDK/Input.h"
 #ifdef _WIN32
 
 static LRESULT __stdcall wndProc(HWND window, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
@@ -86,6 +88,7 @@ static LRESULT __stdcall wndProc(HWND window, UINT msg, WPARAM wParam, LPARAM lP
 
     interfaces->inputSystem->enableInput(!gui->isOpen());
 
+    Tickbase::tick = std::make_unique<Tickbase::Tick>();
     return CallWindowProcW(hooks->originalWndProc, window, msg, wParam, lParam);
 }
 
@@ -217,6 +220,10 @@ static bool __STDCALL createMove(LINUX_ARGS(void* thisptr,) float inputSampleTim
 
     if (!(cmd->buttons & (UserCmd::IN_ATTACK | UserCmd::IN_ATTACK2))) 
         Misc::chokePackets(sendPacket);
+    
+    Tickbase::run(cmd, sendPacket);
+    
+    if (!(cmd->buttons & (UserCmd::IN_ATTACK | UserCmd::IN_ATTACK2))) 
         AntiAim::run(cmd, previousViewAngles, currentViewAngles, sendPacket);
     
 
@@ -541,6 +548,73 @@ Hooks::Hooks(HMODULE moduleHandle) noexcept
     originalWndProc = WNDPROC(SetWindowLongPtrW(window, GWLP_WNDPROC, LONG_PTR(wndProc)));
 }
 
+
+void WriteUsercmd(void* buf, UserCmd* in, UserCmd* out)
+{
+    static DWORD WriteUsercmdF = (DWORD)memory->WriteUsercmd;
+
+    __asm
+    {
+        mov ecx, buf
+        mov edx, in
+        push out
+        call WriteUsercmdF
+        add esp, 4
+    }
+}
+
+static bool __fastcall WriteUsercmdDeltaToBuffer(void* ecx, void* edx, int slot, void* buffer, int from, int to, bool isnewcommand) noexcept
+{
+    auto original = hooks->client.getOriginal<bool, 24>(slot, buffer, from, to, isnewcommand);
+    if (_ReturnAddress() == memory->WriteUsercmdDeltaToBufferReturn || Tickbase::tick->tickshift <= 0 || !memory->clientState)
+        return original(ecx, slot, buffer, from, to, isnewcommand);
+
+    if (from != -1)
+        return true;
+
+    int* numBackupCommands = (int*)(reinterpret_cast <uintptr_t> (buffer) - 0x30);
+    int* numNewCommands = (int*)(reinterpret_cast <uintptr_t> (buffer) - 0x2C);
+
+    int32_t newcommands = *numNewCommands;
+
+    int nextcommmand = memory->clientState->lastOutgoingCommand + memory->clientState->chokedCommands + 1;
+    int totalcommands = std::min(Tickbase::tick->tickshift, Tickbase::tick->maxUsercmdProcessticks);
+    Tickbase::tick->tickshift = 0;
+
+    from = -1;
+    *numNewCommands = totalcommands;
+    *numBackupCommands = 0;
+
+    for (to = nextcommmand - newcommands + 1; to <= nextcommmand; to++)
+    {
+        if (!(original(ecx, slot, buffer, from, to, true)))
+            return false;
+
+        from = to;
+    }
+
+    UserCmd* lastRealCmd = memory->input->GetUserCmd(slot, from);
+    UserCmd fromcmd;
+
+    if (lastRealCmd)
+        fromcmd = *lastRealCmd;
+
+    UserCmd tocmd = fromcmd;
+    tocmd.tickCount += 200;
+    tocmd.commandNumber++;
+
+    for (int i = newcommands; i <= totalcommands; i++)
+    {
+        WriteUsercmd(buffer, &tocmd, &fromcmd);
+        fromcmd = tocmd;
+        tocmd.commandNumber++;
+        tocmd.tickCount++;
+    }
+
+    return true;
+}
+
+void Hooks::install() noexcept
 #else
 
 static void swapWindow(SDL_Window* window) noexcept
@@ -645,6 +719,25 @@ void Hooks::install() noexcept
     viewRender.init(memory->viewRender);
     viewRender.hookAt(IS_WIN32() ? 39 : 40, render2dEffectsPreHud);
     viewRender.hookAt(IS_WIN32() ? 41 : 42, renderSmokeOverlay);
+    bspQuery.hookAt(6, listLeavesInBox);
+    client.hookAt(24, WriteUsercmdDeltaToBuffer);
+    client.hookAt(37, frameStageNotify);
+    clientMode.hookAt(17, shouldDrawFog);
+    clientMode.hookAt(18, overrideView);
+    clientMode.hookAt(24, createMove);
+    clientMode.hookAt(27, shouldDrawViewModel);
+    clientMode.hookAt(35, getViewModelFov);
+    clientMode.hookAt(44, doPostScreenEffects);
+    clientMode.hookAt(58, updateColorCorrectionWeights);
+    engine.hookAt(82, isPlayingDemo);
+    engine.hookAt(101, getScreenAspectRatio);
+    engine.hookAt(218, getDemoPlaybackParameters);
+    modelRender.hookAt(21, drawModelExecute);
+    panel.hookAt(41, paintTraverse);
+    sound.hookAt(5, emitSound);
+    surface.hookAt(15, setDrawColor);
+    surface.hookAt(67, lockCursor);
+    svCheats.hookAt(13, svCheatsGetBool);
 
 #ifdef _WIN32
     if (DWORD oldProtection; VirtualProtect(memory->dispatchSound, 4, PAGE_EXECUTE_READWRITE, &oldProtection)) {
