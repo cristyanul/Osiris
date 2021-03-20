@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
@@ -151,9 +151,6 @@
     </ClCompile>
     <ClCompile Include="Helpers.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Hacks\Tickbase.cpp">
-      <Filter>Hacks</Filter>
     </ClCompile>
     <ClCompile Include="InputUtil.cpp">
       <Filter>Source Files</Filter>
@@ -453,9 +450,6 @@
     </ClInclude>
     <ClInclude Include="SDK\Panorama.h">
       <Filter>SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="Hacks\Tickbase.h">
-      <Filter>Hacks</Filter>
     </ClInclude>
     <ClInclude Include="SDK\Platform.h">
       <Filter>SDK</Filter>

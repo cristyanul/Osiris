@@ -23,7 +23,6 @@ template <typename Key, typename Value>
 struct UtlMap;
 template <typename T>
 class UtlVector;
-class ClientState;
 
 struct ActiveChannels;
 struct Channel;
@@ -51,7 +50,6 @@ public:
     GlowObjectManager* glowObjectManager;
     UtlVector<PlantedC4*>* plantedC4s;
     UtlMap<short, PanoramaEventRegistration>* registeredPanoramaEvents;
-    ClientState* clientState;
 
     bool* disablePostProcessing;
 
@@ -105,11 +103,6 @@ public:
     }
 
     bool submitReport(const char* xuid, const char* report) const noexcept
-    const wchar_t*(__thiscall* getDecoratedPlayerName)(PlayerResource* pr, int index, wchar_t* buffer, int buffsize, int flags);
-    void* WriteUsercmdDeltaToBufferReturn;
-    uintptr_t WriteUsercmd;
-private:
-    static std::uintptr_t findPattern(const wchar_t* module, const char* pattern) noexcept
     {
 #ifdef _WIN32
         return reinterpret_cast<bool(__stdcall*)(const char*, const char*)>(submitReportFunction)(xuid, report);
