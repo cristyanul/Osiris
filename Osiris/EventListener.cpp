@@ -23,6 +23,7 @@ EventListener::EventListener() noexcept
     interfaces->gameEventManager->addListener(this, "bullet_impact");
 
     interfaces->gameEventManager->addListener(this, "player_death");
+    interfaces->gameEventManager->addListener(this, "vote_cast");
 
     if (const auto desc = memory->getEventDescriptor(interfaces->gameEventManager, "player_death", nullptr))
         std::swap(desc->listeners[0], desc->listeners[desc->listeners.size - 1]);
@@ -65,6 +66,8 @@ void EventListener::fireGameEvent(GameEvent* event)
     case fnv::hash("cs_win_panel_match"):
         if (config->misc.autoDisconnect)
             interfaces->engine->clientCmdUnrestricted("disconnect");
+    case fnv::hash("vote_cast"):
+        Misc::voteRevealer(event);
         break;
     }
 }
