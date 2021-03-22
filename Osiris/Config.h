@@ -196,6 +196,7 @@ public:
         bool slowwalk{ false };
         bool autoPistol{ false };
         bool autoReload{ false };
+        bool chokedPackets{ false };
         bool autoAccept{ false };
         bool radarHack{ false };
         bool revealRanks{ false };
