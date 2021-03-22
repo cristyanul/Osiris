@@ -1264,7 +1264,6 @@ void GUI::renderMiscWindow(bool contentOnly) noexcept
     ImGuiCustom::colorPicker("Recoil crosshair", config->misc.recoilCrosshair);
     ImGui::Checkbox("Auto pistol", &config->misc.autoPistol);
     ImGui::Checkbox("Auto reload", &config->misc.autoReload);
-    ImGui::Checkbox("Choke Packets", &config->misc.chokedPackets);
     ImGui::Checkbox("Auto accept", &config->misc.autoAccept);
     ImGui::Checkbox("Radar hack", &config->misc.radarHack);
     ImGui::Checkbox("Reveal ranks", &config->misc.revealRanks);
