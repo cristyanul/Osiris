@@ -1,8 +1,6 @@
 #include <fstream>
 
 #ifdef _WIN32
-#include <Windows.h>
-#include <shellapi.h>
 #include <ShlObj.h>
 #endif
 
@@ -461,7 +459,6 @@ static void from_json(const json& j, Config::Misc& m)
     read(j, "Reveal ranks", m.revealRanks);
     read(j, "Reveal money", m.revealMoney);
     read(j, "Reveal suspect", m.revealSuspect);
-    read(j, "Reveal votes", m.revealVotes);
     read<value_t::object>(j, "Spectator list", m.spectatorList);
     read<value_t::object>(j, "Watermark", m.watermark);
     read<value_t::object>(j, "Offscreen Enemies", m.offscreenEnemies);
@@ -841,7 +838,6 @@ static void to_json(json& j, const Config::Misc& o)
     WRITE("Reveal ranks", revealRanks);
     WRITE("Reveal money", revealMoney);
     WRITE("Reveal suspect", revealSuspect);
-    WRITE("Reveal votes", revealVotes);
     WRITE("Spectator list", spectatorList);
     WRITE("Watermark", watermark);
     WRITE("Offscreen Enemies", offscreenEnemies);
@@ -1093,11 +1089,7 @@ void Config::createConfigDir() const noexcept
 void Config::openConfigDir() const noexcept
 {
     createConfigDir();
-#ifdef _WIN32
-    ShellExecuteW(nullptr, L"open", path.wstring().c_str(), nullptr, nullptr, SW_SHOWNORMAL);
-#else
-    int ret = std::system(("xdg-open " + path.string()).c_str());
-#endif
+    int ret = std::system((WIN32_LINUX("start ", "xdg-open ") + path.string()).c_str());
 }
 
 void Config::scheduleFontLoad(const std::string& name) noexcept
