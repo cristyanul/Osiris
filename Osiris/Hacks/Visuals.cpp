@@ -135,6 +135,15 @@ void Visuals::rdrawothermodels() noexcept
     rdrawothermodels->setValue(config->visuals.rdrawothermodels ? 100 : 0);
 }
 
+void Visuals::nozoom() noexcept
+{
+    if (config->visuals.nozoom) {
+        if (localPlayer && localPlayer->isScoped()) {
+            localPlayer->fov() = 90 + config->visuals.fov;
+            localPlayer->fovStart() = 90 + config->visuals.fov;
+        }
+    }
+}
 void Visuals::colorWorld() noexcept
 {
     if (!config->visuals.world.enabled && !config->visuals.sky.enabled)

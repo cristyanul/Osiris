@@ -27,14 +27,13 @@ void AntiAim::run(UserCmd* cmd, const Vector& previousViewAngles, const Vector& 
         if (!localPlayer)
             return;
         const auto activeWeapon = localPlayer->getActiveWeapon();
-
         if (!activeWeapon)
             return;
-
         if (!activeWeapon->isGrenade() && cmd->buttons & (UserCmd::IN_ATTACK | UserCmd::IN_ATTACK2))
             return;
-
         if (localPlayer->throwing(cmd))
+            return;
+        if (cmd->buttons & (UserCmd::IN_USE) || (localPlayer->moveType() == MoveType::LADDER) || (localPlayer->moveType() == MoveType::NOCLIP))
             return;
         if (cmd->buttons &= ~(UserCmd::IN_FORWARD | UserCmd::IN_BACK | UserCmd::IN_MOVERIGHT | UserCmd::IN_MOVELEFT))
 

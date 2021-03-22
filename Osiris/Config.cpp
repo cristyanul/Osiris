@@ -318,6 +318,7 @@ static void from_json(const json& j, Config::Visuals& v)
     read(j, "Wireframe smoke", v.wireframeSmoke);
     read(j, "Zoom", v.zoom);
     read(j, "Zoom key", v.zoomKey);
+    read(j, "No Zoom", v.nozoom);
     read(j, "Thirdperson", v.thirdperson);
     read(j, "Thirdperson key", v.thirdpersonKey);
     read(j, "Thirdperson distance", v.thirdpersonDistance);
@@ -911,6 +912,7 @@ static void to_json(json& j, const Config::Visuals& o)
     WRITE("Wireframe smoke", wireframeSmoke);
     WRITE("Zoom", zoom);
     WRITE("Zoom key", zoomKey);
+    WRITE("No Zoom", nozoom);
     WRITE("Thirdperson", thirdperson);
     WRITE("Thirdperson key", thirdpersonKey);
     WRITE("Thirdperson distance", thirdpersonDistance);

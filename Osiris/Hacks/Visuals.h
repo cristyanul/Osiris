@@ -18,6 +18,7 @@ namespace Visuals
     void remove3dSky() noexcept;
     void removeShadows() noexcept;
     void applyZoom(FrameStage stage) noexcept;
+    void nozoom() noexcept;
     void applyScreenEffects() noexcept;
     void hitEffect(GameEvent* event = nullptr) noexcept;
     void hitMarker(GameEvent* event, ImDrawList* drawList = nullptr) noexcept;
