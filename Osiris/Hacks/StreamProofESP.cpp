@@ -321,7 +321,7 @@ static void renderPlayerBox(const PlayerData& playerData, const Player& config) 
     FontPush font{ config.font.name, playerData.distanceToLocal };
 
     if (config.name.enabled) {
-        const auto nameSize = renderText(playerData.distanceToLocal, config.textCullDistance, config.name, playerData.name, { (bbox.min.x + bbox.max.x) / 2, bbox.min.y - 5 });
+        const auto nameSize = renderText(playerData.distanceToLocal, config.textCullDistance, config.name, playerData.name.c_str(), { (bbox.min.x + bbox.max.x) / 2, bbox.min.y - 5 });
         offsetMins.y -= nameSize.y + 5;
     }
 
@@ -453,11 +453,16 @@ static bool renderPlayerEsp(const PlayerData& playerData, const Player& playerCo
         || playerConfig.spottedOnly && !playerData.spotted && !(playerConfig.audibleOnly && playerData.audible)) // if both "Audible Only" and "Spotted Only" are on treat them as audible OR spotted
         return true;
 
+    if (playerData.immune)
+        Helpers::setAlphaFactor(0.5f);
+
     renderPlayerBox(playerData, playerConfig);
     drawPlayerSkeleton(playerConfig.skeleton, playerData.bones);
 
     if (const BoundingBox headBbox{ playerData.headMins, playerData.headMaxs, playerConfig.headBox.scale })
         renderBox(headBbox, playerConfig.headBox);
+
+    Helpers::setAlphaFactor(1.0f);
 
     return true;
 }
