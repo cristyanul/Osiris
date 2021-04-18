@@ -1,14 +1,17 @@
 #include "AntiAim.h"
-#include "../Interfaces.h"
-#include "../SDK/Engine.h"
+
+#include "../imgui/imgui.h"
+
+#include "../ConfigStructs.h"
 #include "../SDK/Entity.h"
-#include "../SDK/EntityList.h"
-#include "../SDK/NetworkChannel.h"
+#include "../SDK/LocalPlayer.h"
 #include "../SDK/UserCmd.h"
 #include "../Memory.h"
 #include "../SDK/GlobalVars.h"
 #include "../SDK/Surface.h"
 #include "../SDK/GameEvent.h"
+#include "../SDK/Vector.h"
+
 #if OSIRIS_ANTIAIM()
 
 struct AntiAimConfig {

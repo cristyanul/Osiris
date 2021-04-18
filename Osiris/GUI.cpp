@@ -1,8 +1,12 @@
-﻿#include <array>
-#include <cwctype>
+﻿#include <algorithm>
+#include <array>
+#include <cwchar>
 #include <fstream>
-#include <functional>
+#include <iterator>
 #include <string>
+#include <string_view>
+#include <unordered_map>
+#include <vector>
 
 #ifdef _WIN32
 #include <ShlObj.h>
@@ -11,13 +15,13 @@
 
 #include "imgui/imgui.h"
 #include "imgui/imgui_internal.h"
-#include "imgui/imgui_impl_win32.h"
 #include "imgui/imgui_stdlib.h"
 
 #include "imguiCustom.h"
 
 #include "GUI.h"
 #include "Config.h"
+#include "ConfigStructs.h"
 #include "Hacks/Misc.h"
 #include "Hacks/SkinChanger.h"
 #include "Helpers.h"
@@ -858,7 +862,7 @@ void GUI::renderStreamProofESPWindow(bool contentOnly) noexcept
 
             if (ImGui::BeginPopup("")) {
                 ImGui::SetNextItemWidth(95.0f);
-                ImGui::Combo("Type", &playerConfig.healthBar.type, "Gradient\0Solid\0");
+                ImGui::Combo("Type", &playerConfig.healthBar.type, "Gradient\0Solid\0Health-based\0");
                 if (playerConfig.healthBar.type == HealthBar::Solid) {
                     ImGui::SameLine();
                     ImGuiCustom::colorPicker("", static_cast<Color4&>(playerConfig.healthBar));
@@ -1318,7 +1322,7 @@ void GUI::renderMiscWindow(bool contentOnly) noexcept
         ImGui::Checkbox("Health Bar", &config->misc.offscreenEnemies.healthBar.enabled);
         ImGui::SameLine();
         ImGui::SetNextItemWidth(95.0f);
-        ImGui::Combo("Type", &config->misc.offscreenEnemies.healthBar.type, "Gradient\0Solid\0");
+        ImGui::Combo("Type", &config->misc.offscreenEnemies.healthBar.type, "Gradient\0Solid\0Health-based\0");
         if (config->misc.offscreenEnemies.healthBar.type == HealthBar::Solid) {
             ImGui::SameLine();
             ImGuiCustom::colorPicker("", static_cast<Color4&>(config->misc.offscreenEnemies.healthBar));

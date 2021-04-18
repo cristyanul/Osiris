@@ -1,20 +1,32 @@
+#include <algorithm>
 #include <cstring>
-#include <functional>
+#include <deque>
+#include <memory>
+#include <string>
+#include <string_view>
+#include <tuple>
+#include <unordered_map>
 
 #include "Chams.h"
 #include "../Config.h"
 #include "../Helpers.h"
 #include "../Hooks.h"
 #include "../Interfaces.h"
+#include "../Memory.h"
 #include "Backtrack.h"
+#include "../InputUtil.h"
+#include "../SDK/ClassId.h"
+#include "../SDK/ClientClass.h"
 #include "../SDK/Entity.h"
 #include "../SDK/EntityList.h"
 #include "../SDK/GlobalVars.h"
 #include "../SDK/LocalPlayer.h"
 #include "../SDK/Material.h"
 #include "../SDK/MaterialSystem.h"
+#include "../SDK/ModelRender.h"
 #include "../SDK/StudioRender.h"
 #include "../SDK/KeyValues.h"
+#include "../SDK/Utils.h"
 
 static Material* normal;
 static Material* flat;
@@ -224,10 +236,7 @@ void Chams::applyChams(const std::array<Config::Chams::Material, 7>& chams, int 
         
         float r, g, b;
         if (cham.healthBased && health) {
-            const auto healthFraction = std::clamp(health / 100.0f, 0.0f, 1.0f);
-            constexpr auto greenHue = 1.0f / 3.0f;
-            constexpr auto redHue = 0.0f;
-            Helpers::convertHSVtoRGB(std::lerp(redHue, greenHue, healthFraction), 1.0f, 1.0f, r, g, b);
+            Helpers::healthColor(std::clamp(health / 100.0f, 0.0f, 1.0f), r, g, b);
         } else if (cham.rainbow) {
             std::tie(r, g, b) = rainbowColor(cham.rainbowSpeed);
         } else {
@@ -265,10 +274,7 @@ void Chams::applyChams(const std::array<Config::Chams::Material, 7>& chams, int 
 
         float r, g, b;
         if (cham.healthBased && health) {
-            const auto healthFraction = std::clamp(health / 100.0f, 0.0f, 1.0f);
-            constexpr auto greenHue = 1.0f / 3.0f;
-            constexpr auto redHue = 0.0f;
-            Helpers::convertHSVtoRGB(std::lerp(redHue, greenHue, healthFraction), 1.0f, 1.0f, r, g, b);
+            Helpers::healthColor(std::clamp(health / 100.0f, 0.0f, 1.0f), r, g, b);
         } else if (cham.rainbow) {
             std::tie(r, g, b) = rainbowColor(cham.rainbowSpeed);
         } else {

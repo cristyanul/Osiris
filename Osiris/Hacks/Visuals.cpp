@@ -1,5 +1,8 @@
 #include <array>
 #include <cstring>
+#include <string_view>
+#include <utility>
+#include <vector>
 
 #include "../imgui/imgui.h"
 #define IMGUI_DEFINE_MATH_OPERATORS
@@ -11,7 +14,9 @@
 #include "Visuals.h"
 
 #include "../SDK/ConVar.h"
+#include "../SDK/Cvar.h"
 #include "../SDK/Entity.h"
+#include "../SDK/EntityList.h"
 #include "../SDK/FrameStage.h"
 #include "../SDK/GameEvent.h"
 #include "../SDK/GlobalVars.h"
@@ -20,7 +25,6 @@
 #include "../SDK/MaterialSystem.h"
 #include "../SDK/ModelInfo.h"
 #include "../SDK/NetworkStringTable.h"
-#include "../SDK/RenderContext.h"
 #include "../SDK/Surface.h"
 #include "../SDK/ViewRenderBeams.h"
 
@@ -544,8 +548,8 @@ void Visuals::drawMolotovHull(ImDrawList* drawList) noexcept
         std::array<Vector, 72> points;
         for (std::size_t i = 0; i < points.size(); ++i) {
             constexpr auto flameRadius = 60.0f; // https://github.com/perilouswithadollarsign/cstrike15_src/blob/f82112a2388b841d72cb62ca48ab1846dfcc11c8/game/server/cstrike15/Effects/inferno.cpp#L889
-            points[i] = Vector{ flameRadius * std::cos(degreesToRadians(i * (360.0f / points.size()))),
-                                flameRadius * std::sin(degreesToRadians(i * (360.0f / points.size()))),
+            points[i] = Vector{ flameRadius * std::cos(Helpers::deg2rad(i * (360.0f / points.size()))),
+                                flameRadius * std::sin(Helpers::deg2rad(i * (360.0f / points.size()))),
                                 0.0f };
         }
         return points;
