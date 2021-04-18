@@ -19,6 +19,7 @@
 #include "Hacks/Backtrack.h"
 #include "Hacks/Glow.h"
 #include "Hacks/Sound.h"
+#include "SDK/Platform.h"
 
 #ifdef _WIN32
 int CALLBACK fontCallback(const LOGFONTW* lpelfe, const TEXTMETRICW*, DWORD, LPARAM lParam)
