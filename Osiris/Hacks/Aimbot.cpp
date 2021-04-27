@@ -133,6 +133,7 @@ void Aimbot::updateInput() noexcept
         keyPressed = config->aimbotKey.isDown();
     if (config->aimbotKeyMode == 1 && config->aimbotKey.isPressed())
         keyPressed = !keyPressed;
+}
 static void setRandomSeed(int seed) noexcept
 {
     using randomSeedFn = void(*)(int);
