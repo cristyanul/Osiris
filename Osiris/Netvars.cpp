@@ -49,7 +49,8 @@ Netvars::Netvars() noexcept
     for (auto clientClass = interfaces->client->getAllClasses(); clientClass; clientClass = clientClass->next)
         walkTable(clientClass->networkName, clientClass->recvTable);
 
-    std::sort(offsets.begin(), offsets.end(), [](const auto& a, const auto& b) { return a.first < b.first; });
+    std::ranges::sort(offsets, {}, &std::pair<uint32_t, uint16_t>::first);
+    offsets.shrink_to_fit();
 }
 
 void Netvars::restore() noexcept

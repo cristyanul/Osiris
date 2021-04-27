@@ -23,6 +23,11 @@ namespace SkinChanger
     void overrideHudIcon(GameEvent& event) noexcept;
     void updateStatTrak(GameEvent& event) noexcept;
 
+    // GUI
+    void menuBarItem() noexcept;
+    void tabItem() noexcept;
+    void drawGUI(bool contentOnly) noexcept;
+
     struct PaintKit {
         PaintKit(int id, const std::string& name, int rarity = 0) noexcept;
         PaintKit(int id, std::string&& name, int rarity = 0) noexcept;
@@ -63,6 +68,7 @@ namespace SkinChanger
 
     ImTextureID getItemIconTexture(const std::string& iconpath) noexcept;
     void clearItemIconTextures() noexcept;
+    void clearUnusedItemIconTextures() noexcept;
 
     void fixKnifeAnimation(Entity* viewModelWeapon, long& sequence) noexcept;
 
@@ -244,5 +250,3 @@ struct item_setting {
     char custom_name[32] = "";
     std::array<sticker_setting, 5> stickers;
 };
-
-item_setting* get_by_definition_index(WeaponId weaponId);
