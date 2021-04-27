@@ -299,6 +299,8 @@ public:
     
     NETVAR(droneTarget, "CDrone", "m_hMoveToThisEntity", int)
 
+    NETVAR(getShotsFired, "CCSPlayer", "m_iShotsFired", int);
+
     NETVAR(thrower, "CBaseGrenade", "m_hThrower", int)
     NETVAR(pinPulled, "CBaseCSGrenade", "m_bPinPulled", bool)
     NETVAR(throwTime, "CBaseCSGrenade", "m_fThrowTime", float)
