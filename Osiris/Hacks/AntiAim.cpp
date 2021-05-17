@@ -24,7 +24,7 @@ struct AntiAimConfig {
 
 void AntiAim::run(UserCmd* cmd, const Vector& previousViewAngles, const Vector& currentViewAngles, bool& sendPacket) noexcept
 {
-    float a = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+    //float a = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
     bool tf = (rand() % 2) != 0;
     if (antiAimConfig.enabled) {
         if (!localPlayer)
@@ -41,15 +41,15 @@ void AntiAim::run(UserCmd* cmd, const Vector& previousViewAngles, const Vector& 
         if (cmd->buttons &= ~(UserCmd::IN_FORWARD | UserCmd::IN_BACK | UserCmd::IN_MOVERIGHT | UserCmd::IN_MOVELEFT))
 
         if (antiAimConfig.pitch && cmd->viewangles.x == currentViewAngles.x)
-            cmd->viewangles.x = (antiAimConfig.pitchAngle * a);
+            cmd->viewangles.x = (antiAimConfig.pitchAngle);
         
 
         if (tf)
             // real
-            cmd->viewangles.y += (antiAimConfig.yawAngle * a);
+            cmd->viewangles.y += (antiAimConfig.yawAngle);
         else
             // fake
-            cmd->viewangles.y -= (antiAimConfig.yawAngle * a);
+            cmd->viewangles.y -= (antiAimConfig.yawAngle);
    
    
     }
