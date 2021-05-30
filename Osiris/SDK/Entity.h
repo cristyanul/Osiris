@@ -58,6 +58,16 @@ public:
     VIRTUAL_METHOD(const Vector&, obbMaxs, 2, (), (this))
 };
 
+class EconItemView {
+public:
+    INCONSTRUCTIBLE(EconItemView)
+
+    std::uintptr_t getAttributeList() noexcept
+    {
+        return std::uintptr_t(this) + WIN32_LINUX(0x244, 0x2F8);
+    }
+};
+
 class Entity {
 public:
     INCONSTRUCTIBLE(Entity)
@@ -281,7 +291,8 @@ public:
     NETVAR(accountID, "CBaseAttributableItem", "m_iAccountID", int)
     NETVAR(itemDefinitionIndex, "CBaseAttributableItem", "m_iItemDefinitionIndex", short)
     NETVAR(itemDefinitionIndex2, "CBaseAttributableItem", "m_iItemDefinitionIndex", WeaponId)
-    NETVAR(itemIDHigh, "CBaseAttributableItem", "m_iItemIDHigh", int)
+    NETVAR(itemIDHigh, "CBaseAttributableItem", "m_iItemIDHigh", std::uint32_t)
+    NETVAR(itemIDLow, "CBaseAttributableItem", "m_iItemIDLow", std::uint32_t)
     NETVAR(entityQuality, "CBaseAttributableItem", "m_iEntityQuality", int)
     NETVAR(customName, "CBaseAttributableItem", "m_szCustomName", char[32])
     NETVAR(fallbackPaintKit, "CBaseAttributableItem", "m_nFallbackPaintKit", unsigned)
@@ -289,6 +300,7 @@ public:
     NETVAR(fallbackWear, "CBaseAttributableItem", "m_flFallbackWear", float)
     NETVAR(fallbackStatTrak, "CBaseAttributableItem", "m_nFallbackStatTrak", unsigned)
     NETVAR(initialized, "CBaseAttributableItem", "m_bInitialized", bool)
+    NETVAR(econItemView, "CBaseAttributableItem", "m_Item", EconItemView)
 
     NETVAR(owner, "CBaseViewModel", "m_hOwner", int)
     NETVAR(weapon, "CBaseViewModel", "m_hWeapon", int)

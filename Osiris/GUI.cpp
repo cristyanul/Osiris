@@ -23,7 +23,7 @@
 #include "Config.h"
 #include "ConfigStructs.h"
 #include "Hacks/Misc.h"
-#include "Hacks/SkinChanger.h"
+#include "Hacks/InventoryChanger.h"
 #include "Helpers.h"
 #include "Hooks.h"
 #include "Interfaces.h"
@@ -107,7 +107,7 @@ void GUI::render() noexcept
         renderChamsWindow();
         renderStreamProofESPWindow();
         renderVisualsWindow();
-        SkinChanger::drawGUI(false);
+        InventoryChanger::drawGUI(false);
         Sound::drawGUI(false);
         renderStyleWindow();
         renderMiscWindow();
@@ -183,7 +183,7 @@ void GUI::renderMenuBar() noexcept
         menuBarItem("Chams", window.chams);
         menuBarItem("ESP", window.streamProofESP);
         menuBarItem("Visuals", window.visuals);
-        SkinChanger::menuBarItem();
+        InventoryChanger::menuBarItem();
         Sound::menuBarItem();
         menuBarItem("Style", window.style);
         menuBarItem("Misc", window.misc);
@@ -1097,7 +1097,6 @@ void GUI::renderMiscWindow(bool contentOnly) noexcept
     ImGui::Checkbox("Reveal money", &config->misc.revealMoney);
     ImGui::Checkbox("Reveal suspect", &config->misc.revealSuspect);
     ImGui::Checkbox("Reveal votes", &config->misc.revealVotes);
-    ImGui::Checkbox("Deathmatch godmode", &config->misc.deathmatchGod);
 
     ImGui::Checkbox("Spectator list", &config->misc.spectatorList.enabled);
     ImGui::SameLine();
@@ -1336,13 +1335,13 @@ void GUI::renderConfigWindow(bool contentOnly) noexcept
             ImGui::OpenPopup("Config to reset");
 
         if (ImGui::BeginPopup("Config to reset")) {
-            static constexpr const char* names[]{ "Whole", "Aimbot", "Triggerbot", "Backtrack", "Anti aim", "Glow", "Chams", "ESP", "Visuals", "Skin changer", "Sound", "Style", "Misc" };
+            static constexpr const char* names[]{ "Whole", "Aimbot", "Triggerbot", "Backtrack", "Anti aim", "Glow", "Chams", "ESP", "Visuals", "Inventory Changer", "Sound", "Style", "Misc" };
             for (int i = 0; i < IM_ARRAYSIZE(names); i++) {
                 if (i == 1) ImGui::Separator();
 
                 if (ImGui::Selectable(names[i])) {
                     switch (i) {
-                    case 0: config->reset(); updateColors(); Misc::updateClanTag(true); SkinChanger::scheduleHudUpdate(); break;
+                    case 0: config->reset(); updateColors(); Misc::updateClanTag(true); InventoryChanger::scheduleHudUpdate(); break;
                     case 1: config->aimbot = { }; break;
                     case 2: config->triggerbot = { }; break;
                     case 3: Backtrack::resetConfig(); break;
@@ -1351,7 +1350,7 @@ void GUI::renderConfigWindow(bool contentOnly) noexcept
                     case 6: config->chams = { }; break;
                     case 7: config->streamProofESP = { }; break;
                     case 8: config->visuals = { }; break;
-                    case 9: SkinChanger::resetConfig(); SkinChanger::scheduleHudUpdate(); break;
+                    case 9: InventoryChanger::resetConfig(); InventoryChanger::scheduleHudUpdate(); break;
                     case 10: Sound::resetConfig(); break;
                     case 11: config->style = { }; updateColors(); break;
                     case 12: config->misc = { };  Misc::updateClanTag(true); break;
@@ -1364,7 +1363,7 @@ void GUI::renderConfigWindow(bool contentOnly) noexcept
             if (ImGui::Button("Load selected", { 100.0f, 25.0f })) {
                 config->load(currentConfig, incrementalLoad);
                 updateColors();
-                SkinChanger::scheduleHudUpdate();
+                InventoryChanger::scheduleHudUpdate();
                 Misc::updateClanTag(true);
             }
             if (ImGui::Button("Save selected", { 100.0f, 25.0f }))
@@ -1411,7 +1410,7 @@ void GUI::renderGuiStyle2() noexcept
             renderVisualsWindow(true);
             ImGui::EndTabItem();
         }
-        SkinChanger::tabItem();
+        InventoryChanger::tabItem();
         Sound::tabItem();
         if (ImGui::BeginTabItem("Style")) {
             renderStyleWindow(true);

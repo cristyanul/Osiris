@@ -9,7 +9,7 @@
 #include <vector>
 
 #include "imgui/imgui.h"
-#include "Hacks/SkinChanger.h"
+#include "Hacks/InventoryChanger.h"
 #include "ConfigStructs.h"
 #include "InputUtil.h"
 
@@ -209,7 +209,6 @@ public:
         bool quickReload{ false };
         bool prepareRevolver{ false };
         bool oppositeHandKnife = false;
-        bool deathmatchGod = false;
         PreserveKillfeed preserveKillfeed;
         bool svpurebypass{ true };
         bool autoDisconnect{ false };
